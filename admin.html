@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; connect-src https://api.github.com; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+  <title>Admin Konten | MIS Al-Islamiyyah Padalarang</title>
+  <style>
+    :root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#163129;background:#f4f8f5}
+    *{box-sizing:border-box}body{margin:0}a{color:#066349}header{background:#064e3b;color:#fff;padding:24px max(24px,calc((100vw - 960px)/2))}header a{color:#d1fae5}header h1{margin:8px 0 0;font-size:clamp(1.5rem,4vw,2rem)}main{max-width:960px;margin:28px auto;padding:0 18px 48px}.card{background:#fff;border:1px solid #d9e8df;border-radius:20px;padding:24px;margin-bottom:20px;box-shadow:0 10px 30px #064e3b0a}h2{font-size:1.25rem;margin:0 0 8px}p{line-height:1.5;color:#51685d;margin:8px 0 16px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}label{display:block;font-weight:650;font-size:.92rem;margin-bottom:6px}input,select{width:100%;padding:12px 13px;border:1px solid #b7cfc0;border-radius:11px;font:inherit;background:#fff}input:focus,select:focus{outline:3px solid #b3e8cb;border-color:#047857}.field{margin-bottom:16px}button{border:0;border-radius:11px;padding:12px 18px;background:#047857;color:#fff;font:inherit;font-weight:700;cursor:pointer}button:hover{background:#065f46}button:disabled{opacity:.55;cursor:wait}.secondary{background:#e7f3eb;color:#065f46}.secondary:hover{background:#d3e9da}.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.status{padding:14px 16px;border-radius:12px;border:1px solid #b7cfc0;background:#f0faf3;white-space:pre-wrap}.status.error{background:#fff1f2;border-color:#fecdd3;color:#9f1239}.status.success{background:#ecfdf5;border-color:#a7f3d0;color:#065f46}.hint{font-size:.85rem}.preview{width:110px;height:110px;object-fit:contain;border:1px solid #d9e8df;border-radius:14px;background:#fff;padding:8px}.photo-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;margin-top:14px}.photo-item{border:1px solid #d9e8df;border-radius:12px;overflow:hidden}.photo-item img{width:100%;height:140px;object-fit:cover;display:block}.photo-item div{padding:10px;font-size:.85rem}.photo-item strong{display:block}small{color:#607469}code{background:#edf4ee;padding:2px 5px;border-radius:4px}@media(max-width:640px){.grid{grid-template-columns:1fr}.card{padding:20px}}
+  </style>
+  <script src="admin.js" defer></script>
+</head>
+<body>
+  <header><a href="index.html">← Kembali ke situs</a><h1>Admin Konten Madrasah</h1></header>
+  <main>
+    <section class="card">
+      <h2>Hubungkan repositori GitHub</h2>
+      <p>Masukkan token GitHub dengan izin <strong>Contents: Read and write</strong> untuk repositori situs ini. Token hanya dipakai selama halaman terbuka dan tidak disimpan di file situs atau penyimpanan browser.</p>
+      <form id="connect-form">
+        <div class="grid">
+          <div class="field"><label for="owner">Pemilik repositori</label><input id="owner" required autocomplete="off" value="muntashir-358" placeholder="nama-akun-atau-organisasi"></div>
+          <div class="field"><label for="repo">Nama repositori</label><input id="repo" required autocomplete="off" value="WEB-MIS-AL-ISLAMIYYAH-PADALARANG" placeholder="nama-repositori"></div>
+        </div>
+        <div class="grid">
+          <div class="field"><label for="branch">Branch penerbitan</label><input id="branch" autocomplete="off" placeholder="Kosongkan untuk branch utama"></div>
+          <div class="field"><label for="site-dir">Folder sumber Pages</label><select id="site-dir"><option value="">/(root)</option><option value="docs">/docs</option></select></div>
+        </div>
+        <div class="field"><label for="token">Fine-grained personal access token</label><input id="token" type="password" required autocomplete="off" spellcheck="false" placeholder="github_pat_..."></div>
+        <div class="actions"><button type="submit" id="connect-button">Hubungkan</button><button type="button" id="disconnect-button" class="secondary" hidden>Putuskan akses</button></div>
+      </form>
+      <p class="hint">Pilih branch dan folder yang sama dengan pengaturan <strong>Settings → Pages</strong> di GitHub.</p>
+    </section>
+    <div id="status" class="status" role="status" aria-live="polite">Belum terhubung.</div>
+    <div id="editor" hidden>
+      <section class="card">
+        <h2>Logo sekolah</h2>
+        <p>Logo baru akan tampil pada halaman publik setelah perubahan GitHub Pages terbit.</p>
+        <img id="logo-preview" class="preview" alt="Pratinjau logo" hidden>
+        <form id="logo-form">
+          <div class="field"><label for="logo-file">Pilih logo PNG, JPG, atau WebP (maks. 2 MB)</label><input id="logo-file" type="file" accept="image/png,image/jpeg,image/webp" required></div>
+          <button type="submit" id="logo-button">Unggah logo</button>
+        </form>
+      </section>
+      <section class="card">
+        <h2>Foto kegiatan</h2>
+        <p>Tambahkan satu foto setiap kali. Judul akan menjadi keterangan di galeri publik.</p>
+        <form id="photo-form">
+          <div class="field"><label for="photo-file">Pilih foto PNG, JPG, atau WebP (maks. 5 MB)</label><input id="photo-file" type="file" accept="image/png,image/jpeg,image/webp" required></div>
+          <div class="grid"><div class="field"><label for="photo-title">Judul kegiatan</label><input id="photo-title" maxlength="100" required placeholder="Contoh: Wisuda Tahfidz"></div><div class="field"><label for="photo-date">Tanggal kegiatan (opsional)</label><input id="photo-date" type="date"></div></div>
+          <button type="submit" id="photo-button">Unggah foto</button>
+        </form>
+        <h3>Foto yang terbit</h3><div id="photo-list" class="photo-list"></div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
